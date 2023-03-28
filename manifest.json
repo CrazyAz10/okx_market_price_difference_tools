@@ -1,0 +1,55 @@
+{
+    "manifest_version": 2,
+    "name": "啊佐工具",
+    "description": "一款神秘的工具",
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "permissions": [
+        "*://*/*",
+        "storage",
+        "cookies",
+        "webRequest",
+        "webRequestBlocking",
+        "tabs",
+        "alarms",
+        "notifications"
+    ],
+    "background": {
+        "page": "background.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*/*"
+            ],
+            "js": [
+                "lib/jquery.js",
+                "lib/echarts.min.js",
+                "lib/layer/layer.js",
+                "lib/DataTables/DataTables1.10.15.js",
+                "lib/jeDate/jedate.min.js",
+				"lib/utils.js",
+				"js/common.js",
+                "js/main.js"
+            ],
+            "css": [
+                "lib/DataTables/DataTables1.10.15.css",
+                "lib/jeDate/jedate.css",
+                "lib/layer/layer.css"
+            ],
+            "all_frames": false,
+            "run_at": "document_end"
+        }
+    ],
+    "browser_action": {
+      "default_icon": "icon128.png",
+      "default_title": "啊佐工具",
+      "default_popup": "popup.html"
+    },
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "version": "1.0.0.1",
+    "web_accessible_resources": [ "css/*", "js/*", "lib/*", "images/*","debug/*" ,"layui/*"]
+}

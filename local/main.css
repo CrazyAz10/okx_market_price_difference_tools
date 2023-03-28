@@ -1,0 +1,812 @@
+ul,
+li {
+  list-style-type: none;
+}
+#AZTOOLSFORMULA {
+  position: fixed!important;
+  z-index: 9999999999!important;
+  left: calc(100% - 120px);
+  top: 60px;
+}
+#AZTOOLSFORMULA,
+.AZTOOLSFORMULA {
+  color: #333;
+  font-size: 14px;
+}
+#AZTOOLSFORMULA table,
+.AZTOOLSFORMULA table {
+  border-collapse: collapse;
+  width: 100%;
+}
+#AZTOOLSFORMULA .data-tips,
+.AZTOOLSFORMULA .data-tips {
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 5px;
+  font-size: 12px;
+  color: #919191;
+  text-decoration: none;
+  font-style: normal;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 14px;
+  border-radius: 50%;
+  background: #f6f6f6;
+  border: 1px solid #919191;
+  cursor: default;
+}
+#AZTOOLSFORMULA .data-tips > span,
+.AZTOOLSFORMULA .data-tips > span {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 20px;
+  margin-left: -90px;
+  width: 180px;
+  padding: 5px 10px;
+  text-align: center;
+  line-height: 18px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  box-shadow: 1px 0 5px rgba(0, 0, 0, 0.3);
+}
+#AZTOOLSFORMULA .data-tips:hover > span,
+.AZTOOLSFORMULA .data-tips:hover > span {
+  display: block;
+}
+#AZTOOLSFORMULA .loading:not(button),
+.AZTOOLSFORMULA .loading:not(button) {
+  position: relative;
+  min-height: 80%;
+}
+#AZTOOLSFORMULA .loading:not(button):after,
+.AZTOOLSFORMULA .loading:not(button):after {
+  content: 'loading...';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 99;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 14px;
+  animation: Tada 2s infinite;
+  animation-direction: alternate;
+}
+#AZTOOLSFORMULA .blur,
+.AZTOOLSFORMULA .blur {
+  /**  格式，filer: blur(模糊半径)
+        *  模糊半径，取值范围0~Npx，0为无效果
+        */
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+#AZTOOLSFORMULA .az-add-page,
+.AZTOOLSFORMULA .az-add-page {
+  margin-left: 15px;
+  color: #919191;
+}
+#AZTOOLSFORMULA .az-add-page #az-custom-page,
+.AZTOOLSFORMULA .az-add-page #az-custom-page {
+  min-width: auto;
+  width: 28px;
+  height: 24px;
+  margin: 0 5px;
+  color: #999;
+  text-align: center;
+  border: 1px solid #E3E6E8;
+  border-radius: 5px;
+}
+#AZTOOLSFORMULA .go-page,
+.AZTOOLSFORMULA .go-page {
+  display: inline-block;
+  height: 24px;
+  padding: 0 5px;
+  line-height: 24px;
+  margin-left: 12px;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 5px;
+  background: #409EFF;
+  cursor: pointer;
+}
+#AZTOOLSFORMULA .go-page:hover,
+.AZTOOLSFORMULA .go-page:hover {
+  background: #66b1ff;
+}
+#AZTOOLSFORMULA .normal,
+.AZTOOLSFORMULA .normal {
+  width: 106px;
+  margin-top: 50px;
+  transition: all 0.3s;
+  position: relative;
+}
+#AZTOOLSFORMULA .normal .drag,
+.AZTOOLSFORMULA .normal .drag {
+  position: absolute;
+  left: -5px;
+  top: -102px;
+  z-index: 100;
+}
+#AZTOOLSFORMULA .normal .drag > .logo,
+.AZTOOLSFORMULA .normal .drag > .logo {
+  width: 116px;
+  height: 116px;
+  transition: all 0.3s;
+}
+#AZTOOLSFORMULA .normal .drag:hover:after,
+.AZTOOLSFORMULA .normal .drag:hover:after {
+  display: none;
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: -30px;
+  margin-left: -65px;
+  content: "双击我可以切换迷你版哦^_^";
+  display: block;
+  width: 130px;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+}
+#AZTOOLSFORMULA .normal .tip,
+.AZTOOLSFORMULA .normal .tip {
+  width: 100%;
+  height: 45px;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  color: #fff;
+  background: #409EFF;
+  border-radius: 5px 5px 0px 0px;
+}
+#AZTOOLSFORMULA .normal > .information,
+.AZTOOLSFORMULA .normal > .information {
+  box-sizing: border-box;
+  width: 100%;
+  height: 142px;
+  background: #fff;
+  border: 2px solid #409EFF;
+}
+#AZTOOLSFORMULA .normal > .information li,
+.AZTOOLSFORMULA .normal > .information li {
+  padding: 5px;
+}
+#AZTOOLSFORMULA .normal > .information li:hover,
+.AZTOOLSFORMULA .normal > .information li:hover {
+  background: #f1f1f1;
+}
+#AZTOOLSFORMULA .normal > .information li a,
+.AZTOOLSFORMULA .normal > .information li a {
+  display: block;
+  text-decoration: none;
+  font-style: normal;
+  font-size: 12px;
+  color: #7D7D7D;
+}
+#AZTOOLSFORMULA .normal .menu,
+.AZTOOLSFORMULA .normal .menu {
+  position: relative;
+  z-index: 50;
+  width: 100%;
+  padding: 5px 0;
+  background: #409EFF;
+  border-radius: 0 0 5px 5px;
+}
+#AZTOOLSFORMULA .normal .menu li,
+.AZTOOLSFORMULA .normal .menu li {
+  width: 100%;
+  height: 45px;
+}
+#AZTOOLSFORMULA .normal .menu li > p,
+.AZTOOLSFORMULA .normal .menu li > p {
+  width: 100%;
+  height: 45px;
+  box-sizing: border-box;
+  line-height: 42px;
+  text-align: center;
+  white-space: nowrap;
+  background: #409EFF;
+  border-top: 1px solid #409EFF;
+  border-bottom: 1px solid #409EFF;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+#AZTOOLSFORMULA .normal .menu li > p::before,
+.AZTOOLSFORMULA .normal .menu li > p::before {
+  content: '';
+  display: inline-block;
+  height: 45px;
+  width: 0;
+  vertical-align: middle;
+}
+#AZTOOLSFORMULA .normal .menu li > p > img,
+.AZTOOLSFORMULA .normal .menu li > p > img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-left: -2px;
+}
+#AZTOOLSFORMULA .normal .menu li > p > span,
+.AZTOOLSFORMULA .normal .menu li > p > span {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #fff;
+  vertical-align: middle;
+}
+#AZTOOLSFORMULA .normal .menu li > p:hover,
+.AZTOOLSFORMULA .normal .menu li > p:hover {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+}
+#AZTOOLSFORMULA .normal.min,
+.AZTOOLSFORMULA .normal.min {
+  width: 50px;
+}
+#AZTOOLSFORMULA .normal.min .drag:hover:after,
+.AZTOOLSFORMULA .normal.min .drag:hover:after {
+  display: none;
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: -40px;
+  margin-left: -65px;
+  content: "双击我可以切换迷你版哦^_^";
+  display: block;
+  width: 130px;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+}
+#AZTOOLSFORMULA .normal.min .az-pop,
+.AZTOOLSFORMULA .normal.min .az-pop {
+  right: 60px;
+}
+#AZTOOLSFORMULA .normal.min .az-pop.tools::after,
+.AZTOOLSFORMULA .normal.min .az-pop.tools::after {
+  top: 22px;
+  background: #409EFF;
+}
+#AZTOOLSFORMULA .normal.min .az-pop.info::after,
+.AZTOOLSFORMULA .normal.min .az-pop.info::after {
+  top: 66px;
+}
+#AZTOOLSFORMULA .normal.min .az-pop.my::after,
+.AZTOOLSFORMULA .normal.min .az-pop.my::after {
+  top: 112px;
+}
+#AZTOOLSFORMULA .normal.min .drag,
+.AZTOOLSFORMULA .normal.min .drag {
+  left: -2px;
+  top: -50px;
+}
+#AZTOOLSFORMULA .normal.min .drag > .logo,
+.AZTOOLSFORMULA .normal.min .drag > .logo {
+  width: 55px;
+  height: 55px;
+}
+#AZTOOLSFORMULA .normal.min .tip,
+.AZTOOLSFORMULA .normal.min .tip {
+  display: none;
+}
+#AZTOOLSFORMULA .normal.min > .information,
+.AZTOOLSFORMULA .normal.min > .information {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  border: none;
+}
+#AZTOOLSFORMULA .normal.min .menu,
+.AZTOOLSFORMULA .normal.min .menu {
+  width: 100%;
+  border-radius: 5px;
+}
+#AZTOOLSFORMULA .normal.min .menu li,
+.AZTOOLSFORMULA .normal.min .menu li {
+  position: relative;
+}
+#AZTOOLSFORMULA .normal.min .menu li > p,
+.AZTOOLSFORMULA .normal.min .menu li > p {
+  position: absolute;
+  right: 0;
+}
+#AZTOOLSFORMULA .normal.min .menu li > p > img,
+.AZTOOLSFORMULA .normal.min .menu li > p > img {
+  width: 25px;
+}
+#AZTOOLSFORMULA .normal.min .menu li > p > span,
+.AZTOOLSFORMULA .normal.min .menu li > p > span {
+  display: none;
+}
+#AZTOOLSFORMULA .normal.min .menu li > p:hover,
+.AZTOOLSFORMULA .normal.min .menu li > p:hover {
+  width: 106px;
+  border-color: #fff;
+  border-radius: 5px 0 0 5px;
+}
+#AZTOOLSFORMULA .normal.min .menu li > p:hover > img,
+.AZTOOLSFORMULA .normal.min .menu li > p:hover > img {
+  width: 25px;
+}
+#AZTOOLSFORMULA .normal.min .menu li > p:hover > span,
+.AZTOOLSFORMULA .normal.min .menu li > p:hover > span {
+  display: inline;
+}
+#AZTOOLSFORMULA .normal .az-pop,
+.AZTOOLSFORMULA .normal .az-pop {
+  position: absolute;
+  top: 0;
+  right: 115px;
+  min-height: 332px;
+  background: #fff;
+  border: 2px solid #409EFF;
+  border-radius: 10px;
+  animation: showShow 0.3s linear;
+}
+#AZTOOLSFORMULA .normal .az-pop.remove,
+.AZTOOLSFORMULA .normal .az-pop.remove {
+  animation: hideShow 0.3s linear;
+  opacity: 0;
+}
+#AZTOOLSFORMULA .normal .az-pop .content-pop,
+.AZTOOLSFORMULA .normal .az-pop .content-pop {
+  padding: 20px;
+  overflow: auto;
+  position: relative;
+  z-index: 10;
+  border-radius: 0 0 8px 8px;
+}
+#AZTOOLSFORMULA .normal .az-pop .content-pop.loading,
+.AZTOOLSFORMULA .normal .az-pop .content-pop.loading {
+  height: calc(100% - 30px);
+}
+#AZTOOLSFORMULA .normal .az-pop.tools::after,
+.AZTOOLSFORMULA .normal .az-pop.tools::after {
+  top: 210px;
+}
+#AZTOOLSFORMULA .normal .az-pop.info::after,
+.AZTOOLSFORMULA .normal .az-pop.info::after {
+  top: 254px;
+}
+#AZTOOLSFORMULA .normal .az-pop.my::after,
+.AZTOOLSFORMULA .normal .az-pop.my::after {
+  top: 300px;
+}
+#AZTOOLSFORMULA .normal .az-pop::after,
+.AZTOOLSFORMULA .normal .az-pop::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-top: 2px solid #409EFF;
+  border-right: 2px solid #409EFF;
+  transform: rotate(45deg);
+}
+#AZTOOLSFORMULA .normal .az-pop .head,
+.AZTOOLSFORMULA .normal .az-pop .head {
+  width: 100%;
+  height: 30px;
+  box-sizing: border-box;
+  padding: 10px 10px 8px;
+  line-height: 1em;
+  color: #fff;
+  font-size: 12px;
+  background: #409EFF;
+  border-radius: 5px 5px 0 0;
+}
+#AZTOOLSFORMULA .normal .az-pop .head .close,
+.AZTOOLSFORMULA .normal .az-pop .head .close {
+  font-size: 22px;
+  position: absolute;
+  right: 10px;
+  top: 6px;
+}
+#AZTOOLSFORMULA .normal .az-pop .head .close:hover,
+.AZTOOLSFORMULA .normal .az-pop .head .close:hover {
+  color: #333;
+  cursor: pointer;
+}
+#AZTOOLSFORMULA .normal .az-pop.tools-pop .content-pop,
+.AZTOOLSFORMULA .normal .az-pop.tools-pop .content-pop {
+  width: 365px;
+  min-height: 360px;
+  max-height: 430px;
+  overflow-y: auto;
+  padding-top: 0;
+  padding-bottom: 10px;
+}
+#AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop .title,
+.AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop .title {
+  padding: 10px 0;
+  font-size: 14px;
+  line-height: 1em;
+  color: #F9706D;
+  border-top: 1px solid #E2E2E2;
+}
+#AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop:first-child .title,
+.AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop:first-child .title {
+  border-top: none;
+}
+#AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop > ul > li,
+.AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop > ul > li {
+  position: relative;
+  float: left;
+  width: 20%;
+  padding: 8px 0;
+  text-align: center;
+  cursor: pointer;
+}
+#AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop > ul > li:hover,
+.AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop > ul > li:hover {
+  background: #e8e8e8;
+}
+#AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop > ul > li > .hot,
+.AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop > ul > li > .hot {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: rotate(25deg);
+}
+#AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop > ul > li > span,
+.AZTOOLSFORMULA .normal .az-pop.tools-pop .list-prop > ul > li > span {
+  display: block;
+  font-size: 12px;
+  color: #7D7D7D;
+}
+#AZTOOLSFORMULA .normal .az-pop.type2,
+.AZTOOLSFORMULA .normal .az-pop.type2 {
+  z-index: 10;
+  display: block;
+  width: 1120px;
+  height: 700px;
+  background: #fff;
+}
+#AZTOOLSFORMULA .normal .az-pop.type2 .content-pop,
+.AZTOOLSFORMULA .normal .az-pop.type2 .content-pop {
+  max-height: 643px;
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+}
+#AZTOOLSFORMULA .normal .az-pop.type2 .content-pop.loading,
+.AZTOOLSFORMULA .normal .az-pop.type2 .content-pop.loading {
+  height: calc(100% - 53px);
+}
+#AZTOOLSFORMULA .normal .az-pop.type2 .head,
+.AZTOOLSFORMULA .normal .az-pop.type2 .head {
+  position: relative;
+  z-index: 20;
+  height: 53px;
+  padding-left: 145px;
+}
+#AZTOOLSFORMULA .normal .az-pop.type2 .head .logo,
+.AZTOOLSFORMULA .normal .az-pop.type2 .head .logo {
+  position: absolute;
+  left: 30px;
+  bottom: -40px;
+  width: 80px;
+  height: 80px;
+  font-size: 24px;
+  line-height: 80px;
+  text-align: center;
+  background: #409EFF;
+  border-radius: 50%;
+}
+#AZTOOLSFORMULA .normal .az-pop.type2 .head .title,
+.AZTOOLSFORMULA .normal .az-pop.type2 .head .title {
+  display: inline-block;
+  margin-top: 15px;
+  font-size: 16px;
+}
+#AZTOOLSFORMULA .normal .az-pop.type2 .head .close,
+.AZTOOLSFORMULA .normal .az-pop.type2 .head .close {
+  top: 14px;
+  font-size: 36px;
+}
+#AZTOOLSFORMULA.sjfx_pop,
+.AZTOOLSFORMULA.sjfx_pop {
+  width: 100%;
+  padding-bottom: 50px;
+  border-top: 1px solid transparent;
+  color: #9CDCFE;
+}
+#AZTOOLSFORMULA.sjfx_pop .tab-list-select,
+.AZTOOLSFORMULA.sjfx_pop .tab-list-select {
+  display: block;
+  padding: 10px;
+  margin-top: 20px;
+}
+#AZTOOLSFORMULA.sjfx_pop .tab-list-select > li,
+.AZTOOLSFORMULA.sjfx_pop .tab-list-select > li {
+  float: left;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#AZTOOLSFORMULA.sjfx_pop .tab-list-select > li.active,
+.AZTOOLSFORMULA.sjfx_pop .tab-list-select > li.active {
+  color: #409EFF;
+  border-color: #409EFF;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list,
+.AZTOOLSFORMULA.sjfx_pop .table-list {
+  height: 95%;
+  padding: 10px;
+  overflow-y: auto;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.other,
+.AZTOOLSFORMULA.sjfx_pop .table-list.other {
+  width: 60%;
+  min-width: 952px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table {
+  width: 100%;
+  float: left;
+  margin-bottom: 10px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .table-title,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .table-title {
+  padding: 5px;
+  height: 30px;
+  line-height: 20px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .table-title > .title,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .table-title > .title {
+  color: #409EFF;
+  font-weight: bold;
+  font-size: 14px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk {
+  width: 100%;
+  border: 1px solid #909399;
+  padding: 5px 10px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table {
+  width: 50%;
+  color: #b9b7b7;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(1),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(1),
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(1),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(1) {
+  width: 50px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(2),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(2),
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(2),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(2) {
+  width: calc(100% - 240px);
+  min-width: 180px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(3),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(3),
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(3),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(3) {
+  width: 60px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(4),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(4),
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(4),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(4) {
+  width: 80px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(5),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(5),
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(5),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(5) {
+  width: 70px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody {
+  width: 100%;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody tr,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody tr {
+  width: 100%;
+  background-position: 100%;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(rgba(250, 82, 82, 0.1), rgba(250, 82, 82, 0.1));
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(5),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(5),
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(5),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(5) {
+  width: 50px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(4),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(4),
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(4),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(4) {
+  width: calc(100% - 240px);
+  min-width: 180px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(3),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(3),
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(3),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(3) {
+  width: 60px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(2),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(2),
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(2),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(2) {
+  width: 80px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(1),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(1),
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(1),
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(1) {
+  width: 70px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody {
+  width: 100%;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr {
+  width: 100%;
+  background-position: 0;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(rgba(18, 184, 134, 0.1), rgba(18, 184, 134, 0.1));
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr.color-green,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr.color-green,
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody tr.color-green,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody tr.color-green {
+  background-size: 100% 100%!important;
+  background: #41b37d !important;
+  color: #fff;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr.color-red,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr.color-red,
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody tr.color-red,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody tr.color-red {
+  background-size: 100% 100%!important;
+  background-image: #d74e5a;
+  color: #fff;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr.biaoji,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr.biaoji,
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody tr.biaoji,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody tr.biaoji {
+  background-size: 100% 100%!important;
+  background: #00b1c3;
+  color: #fff;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table tbody tr,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table tbody tr {
+  cursor: default;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table tbody tr:hover,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table tbody tr:hover {
+  background: #606266;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table tbody tr:hover td,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table tbody tr:hover td {
+  color: #fff;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table tbody tr td.color-green,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table tbody tr td.color-green {
+  color: #41b37d;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table tbody tr td.color-red,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table tbody tr td.color-red {
+  color: #d74e5a;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table th,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table th {
+  color: #606266;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table td,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table td,
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table th,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table th {
+  padding: 2px;
+  line-height: 14px;
+  height: 32px;
+  font-size: 10px;
+  text-align: right;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table td.center,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table td.center,
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table th.center,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table th.center {
+  text-align: center;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table td.left,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table td.left,
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table th.left,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table th.left {
+  text-align: left;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table td.right,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table td.right,
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table th.right,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table th.right {
+  text-align: right;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt,
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt {
+  width: 40%;
+  min-width: 720px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table,
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table {
+  width: 100%;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk,
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk {
+  width: 100%;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table,
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table {
+  width: 50%;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr,
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr {
+  display: block;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(1),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(1),
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(1),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(1) {
+  min-width: 160px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(2),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(2),
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(2),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(2) {
+  width: 80px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(3),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(3),
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(3),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(3) {
+  width: 60px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(1),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(1),
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(1),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(1) {
+  width: 60px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(2),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(2),
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(2),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(2) {
+  width: 80px;
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(3),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(3),
+#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(3),
+.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(3) {
+  min-width: 160px;
+}
+.AZTOOLSFORMULA_LAYER .layui-layer-content {
+  height: calc(100vh - 50px) !important;
+}
