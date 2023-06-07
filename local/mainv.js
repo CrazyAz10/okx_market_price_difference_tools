@@ -18,7 +18,8 @@
         // ],
         ['w'+'w'+'w'+'.'+'o'+'k'+'x'+'.']: [
             {
-                path: /\/trade-spot\//,
+                path: /\/spot-list/,
+                // path: /\/trade-spot\//,
                 name: 'az_okex_tools',
                 // 黑名单 （名单不全待续补上）
                 blackDomain: [  
@@ -40,7 +41,6 @@
     // 域名+路由匹配
     AZ_TOOLS.domainFilter = function () {
         AZ_TOOLS.adaptationOk = 0;
-        console.log(location.host)
         $.each(AZ_TOOLS.adaptationArr, function (v) {
             // 域名匹配
             if (AZ_TOOLS.loc_host.indexOf(v) !== -1) {
@@ -132,17 +132,19 @@
 
         // 渲染买卖家著列表数据
         this.renderTableData = function(){
-            if($(".AZTOOLSFORMULA .table-list.other .table").length!=this.coins.length){
-                // 修改选择分析币种
-                this.renderInitTable();
-                return;
-            }
-            if(!$(".AZTOOLSFORMULA .table-list.other .table tbody>tr").length){
-                // 首次渲染表格节点
-                this.renderInitTable();
-            }else{
+            this.renderInitTable();
+            // if($(".AZTOOLSFORMULA .table-list.other .table").length!=this.coins.length){
+            //     // 修改选择分析币种
+            //     this.renderInitTable();
+            //     return;
+            // }
+            // if(!$(".AZTOOLSFORMULA .table-list.other .table tbody>tr").length){
+            //     // 首次渲染表格节点
+            //     this.renderInitTable();
+            // }else{
                 // 后续只修改节点内容
                 for(let item of this.coins){
+                    if (!item.active) continue;
                     let Otable = $(".AZTOOLSFORMULA .table-list.other .table[data-coin='"+item.name+"']");
                     Otable.find(".bz_U_sell").text(item.bz_U_sell);
                     Otable.find(".bz_U_buy").text(item.bz_U_buy);
@@ -194,10 +196,12 @@
                         if(this.biaojiList.indexOf(val.userName) > -1){
                             classname = "biaoji";
                         }
+                        console.log(classname)
                         if(classname){
                             Otable.find('.sell>tbody>tr').eq(i).removeClass('biaoji').addClass(classname).html(Otd);
                         }else{
                             let bs = Math.round(val.tradeCount/this.coins_benchmark[item.name]*100);
+                            console.log(bs)
                             bs = bs>100?100:bs;
                             bs = bs<=0?1:bs;
                             // 基准背景色渲染
@@ -240,7 +244,7 @@
                         }
                     }
                 }
-            }
+            // }
             
         }
 
@@ -248,9 +252,19 @@
         this.renderInitTable = function(){
             let Otable = ``;
             for(let item of this.coins){
+                if (!item.active) continue;
                 Otable += `<div class="table" data-coin="${item.name}">
                                 <div class="table-title">
                                     <span class="title">${item.name}市场挂单</span>
+                                    ${
+                                        (() => {
+                                            if (!item.support) {
+                                                return `<span style="color: red">该交易对不支持OTC交易</span>`
+                                            } else {
+                                                return ''
+                                            }
+                                        })()
+                                    }
                                 </div>
                                 <div class="chunk flex space-between">
                                     <table class="sell">
@@ -470,11 +484,15 @@
             // 选择分析币种
             $('body').on('click','.AZTOOLSFORMULA .tab-list-select>li',function(){
                 let pand = $(this).hasClass('active');
+                let tabId = $(this).data('tabid')
+                let index = self.coins.findIndex((item) => item.name == tabId )
+                let tabItem = self.coins[index]
                 if(pand){
                     $(this).removeClass('active');
+                    tabItem.active = false
                 }else{
                     // 控制只监听两个币的数据
-                    if(self.coins.length>=2){
+                    if($('.tab-list-select li.active').length>=2){
                         layer.msg(
                             "只允许同时监听两个币的数据！",
                             {icon: 0, offset: '50px', time: 10000}// icon=0:info, 1:success, 2:error  
@@ -482,21 +500,7 @@
                         return
                     }
                     $(this).addClass('active');
-                }
-                self.coins = [];
-                let Oli = $(".AZTOOLSFORMULA .tab-list-select>li.active");
-                for(let item of Oli){
-                    let name = $(item).attr('data-tabid');
-                    let coinid = $(item).attr('data-coinid');
-                    self.coins.push({
-                        id: coinid,// 币id
-                        name: name,// 币名
-                        buy: [],// 买家数据
-                        sell: [],// 卖家数据
-                        pk: "",// 盘口u
-                        bz_U: "",// 标准U
-                        final_price: "",// 最终价
-                    });
+                    tabItem.active = true
                 }
                 self.distribution();
             });
@@ -537,7 +541,6 @@
 
         // 初始化
         this.init = function () {
-            console.log(111)
             // let iframe = `<iframe id="az_eth_usdt" src="https://www.huobi.co/zh-cn/exchange/eth_usdt/"></iframe>`;
             // $('body').append(iframe);
             // // 清除节点
@@ -718,6 +721,7 @@
         // 6中币数据  默认显示项
         this.coins = [
             {
+                id: '',
                 name: "BTC",// 币名
                 buy: [],// 买家数据
                 sell: [],// 卖家数据
@@ -725,16 +729,9 @@
                 compare: "",// 比对值
                 bz_U: "",// 标准U
                 final_price: "",// 最终价
-            },
-            {
-                name: "ETH",
-                buy: [],
-                sell: [],
-                pk: "",
-                compare: "",// 比对值
-                bz_U: "",// 标准U
-                final_price: "",// 最终价
-            },
+                active: true, // 是否开启分析
+                support: true // 是否支持柜台交易
+            }
         ];
 
         // 展示节点模块
@@ -742,8 +739,9 @@
 
         // 买卖家数据
         this.getsellData = function(data,resolve,reject){
+            var self = this;
             var otcApi = [
-                "https://www.okex.com",
+                "https://www.okex.com"
             ];
             //https://www.okex.com/v3/c2c/tradingOrders/books?t=1641442780842&quoteCurrency=CNY&baseCurrency=USDT&side=buy&paymentMethod=all&userType=all&showTrade=false&receivingAds=false&noShowSafetyLimit=false&showFollow=false&showAlreadyTraded=false&isAbleFilter=false&urlId=7
             // Math.random()*10 > 5 ? DDtools_mainAPI = "https://otc-api-hk.eiijo.cn" : DDtools_mainAPI = "https://otc-api-sz.eiijo.cn"
@@ -755,17 +753,24 @@
                 type: "GET", 
                 dataType: "json",
             }, function (e) {
-                if (e && e.result && e.state) {
-                    e.result.side = data.side;
-                    e.result.name = data.baseCurrency;
-                    if(data.baseCurrency=="USDT"){
-                        e.result.data[data.side] = e.result.data[data.side].slice(0,20);
-                    }else {
-                        e.result.data[data.side] = e.result.data[data.side].slice(0,16);
-                    }
-                    resolve(e.result);
-                }else{
+                // 交易对不支持OTC交易
+                if (e.result.error_code === "17007") {
+                    self.coins[self.coins.findIndex( item => item.name == data.baseCurrency)].support = false
+                    $(`.AZTOOLSFORMULA_LAYER .table-list.other .table[data-coin="${data.baseCurrency}"] .table-title`).append('<span style="color: red">该币种不支持OTC交易 </span>')
                     reject();
+                } else{
+                    if (e && e.result && e.state) {
+                        e.result.side = data.side;
+                        e.result.name = data.baseCurrency;
+                        if(data.baseCurrency=="USDT"){
+                            e.result.data[data.side] = e.result.data[data.side].slice(0,20);
+                        }else {
+                            e.result.data[data.side] = e.result.data[data.side].slice(0,16);
+                        }
+                        resolve(e.result);
+                    }else{
+                        reject();
+                    }
                 }
             });
         }
@@ -801,13 +806,43 @@
         //         }
         //     });
         // }
-        // 数据分析弹层
+        // 数据分析弹层 初始化弹窗
         this.dataAnalysisPop = function(){
             let self = this;
+            // 获取收藏交易对
+            // console.log($(".market-table-container .watch-scroll-box"))
+            // console.log($(".market-table-container .watch-scroll-box i[class*='index_checked']"))
+            let Oli = $(".market-table-container .watch-scroll-box i[class*='index_checked']");
+            this.coins = [];
+            for(let i = 0; i < Oli.length; i++) {
+                let val = Oli[i]
+                let PDomLi = $(val).parents("tr")
+                let name = $.trim( PDomLi.find(".coin-info .coin-name>.short").text().split('/')[0] ); // 交易对 名称
+                this.coins.push({
+                    id: '',
+                    name: name,// 币名
+                    buy: [],// 买家数据
+                    sell: [],// 卖家数据
+                    pk: "",// 盘口u
+                    compare: "",// 比对值
+                    bz_U: "",// 标准U
+                    final_price: "",// 最终价
+                    active: i <= 1 ? true : false, // 是否开启分析
+                    support: true // 是否支持柜台交易
+                },)
+            }
             let Odom = `<div class="AZTOOLSFORMULA sjfx_pop">
                             <ul class="tab-list-select clearfix">
-                                <li class="active" data-tabid="BTC" data-coinid="1" >BTC</li>
-                                <li class="active" data-tabid="ETH" data-coinid="3" >ETH</li>
+                                ${
+                                    (() => {
+                                        let Oli = ``
+                                        this.coins.forEach(item => {
+                                            Oli += `<li class="${item.active ? 'active' : ''}" data-tabid="${item.name}" data-coinid="${item.name}" >${item.name}</li>`
+                                        })
+                                        return Oli
+                                    })()
+                                }
+                                
                             </ul>
                             <div class="table-list other pull-left"></div>
                             <div class="table-list usdt pull-left"></div>
@@ -834,7 +869,7 @@
                     clearInterval(self.pk_timer);
                 }
             });
-            this.distribution();
+            this.coins.length && this.distribution();
         }
 
         // 分配任务器
@@ -846,7 +881,7 @@
 
             this.pk_timer = setInterval(()=>{
                 self.getPKData();
-            },1000);
+            },this.AZ_TOOLS_CONFIG.pk_timer);
             // 分配USDT数据请求
             this.getUSDTData(function(){
                 // 分配买卖家数据请求
@@ -865,7 +900,7 @@
         this.getBuySellData = function(){
             let base_data = {
                 t: (new Date()).getTime(),
-                quoteCurrency: "CNY",
+                quoteCurrency: "cny",
                 baseCurrency: "",
                 side: "buy",
                 paymentMethod: "all",
@@ -880,6 +915,7 @@
             let my_promise_arr = [];
             // 异步获取数据
             for(let item of this.coins){
+                if (!item.active || !item.support) continue;
                 // 添加买家
                 let data = Object.assign({},base_data);
                 data.baseCurrency = item.name;
@@ -922,13 +958,13 @@
                 side: "buy",
                 paymentMethod: "all",
                 userType: "all",
-                showTrade: "false",
+                // showTrade: "false",
                 receivingAds: "false",
-                noShowSafetyLimit: "false",
-                showFollow: "false",
-                showAlreadyTraded: "false",
-                isAbleFilter: "false",
-                urlId: 7
+                // noShowSafetyLimit: "false",
+                // showFollow: "false",
+                // showAlreadyTraded: "false",
+                // isAbleFilter: "false",
+                urlId: 0
             };
             let my_promise_arr = [];
             // 异步获取数据
@@ -953,7 +989,7 @@
                         val.userName= val.nickName;
                         val.tradeMonthTimes= val.completedOrderQuantity;
                         val.orderCompleteRate= val.completedRate;
-                        val.tradeCount= val.availableAmount;
+                        val.tradeCount= val.availableAmount * 1;
                     }
                 }
                 if(fn) fn();
@@ -965,14 +1001,14 @@
             })
         }
 
-        // 获取盘口标准值
+        // 获取盘口标准值 实时币价
         this.getPKData = function(){
             
-            let Oli = $(".ticker-table-box.ticker-scroll.watch-scroll-box .item.checked");
-            console.log(Oli)
+            let Oli = $(".market-table-container .watch-scroll-box i[class*='index_checked']");
             for(let val of Oli){
-                let name = $.trim( $(val).find(".name").text().split('/')[0] );
-                let U = $.trim( $(val).find(".right span").eq(0).text().replace(',',"") );
+                let PDomLi = $(val).parents("tr")
+                let name = $.trim( PDomLi.find(".coin-info .coin-name>.short").text().split('/')[0] ); // 交易对 名称
+                let U = $.trim( PDomLi.find(".last-price .price-and-fiat span").eq(0).text().replace(',',"") );// 交易对 币价
                 for(let item of this.coins){
                     if(item.name==name){
                         item.pk = U*1;
@@ -989,6 +1025,7 @@
                 return;
             }
             for(let item of this.coins){
+                if (!item.active) continue;
                 item.bz_U_sell = this.usdt.sell[3].price;
                 item.bz_U_buy = this.usdt.buy[3].price;
                 // 
@@ -1019,7 +1056,6 @@
                     val.tradeCount = val.availableAmount;
                 }
             }
-            // console.log(this.coins)
             this.renderTableData();
             this.renderUsdtData();
         }
