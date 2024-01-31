@@ -18,8 +18,8 @@
         // ],
         ['w'+'w'+'w'+'.'+'o'+'k'+'x'+'.']: [
             {
-                path: /\/spot-list/,
-                // path: /\/trade-spot\//,
+                // path: /\/spot-list/,
+                path: /\/trade-spot\//,
                 name: 'az_okex_tools',
                 // 黑名单 （名单不全待续补上）
                 blackDomain: [  
@@ -741,7 +741,8 @@
         this.getsellData = function(data,resolve,reject){
             var self = this;
             var otcApi = [
-                "https://www.okex.com",
+                // "https://www.okex.com",
+                "https://www.okx.com"
             ];
             //https://www.okex.com/v3/c2c/tradingOrders/books?t=1641442780842&quoteCurrency=CNY&baseCurrency=USDT&side=buy&paymentMethod=all&userType=all&showTrade=false&receivingAds=false&noShowSafetyLimit=false&showFollow=false&showAlreadyTraded=false&isAbleFilter=false&urlId=7
             // Math.random()*10 > 5 ? DDtools_mainAPI = "https://otc-api-hk.eiijo.cn" : DDtools_mainAPI = "https://otc-api-sz.eiijo.cn"
@@ -810,12 +811,16 @@
         this.dataAnalysisPop = function(){
             let self = this;
             // 获取收藏交易对
-            let Oli = $(".market-table-container .watch-scroll-box .index_checked__gKVQB");
+            // console.log($('.tc-watch-list-box .ticker-table-box.ticker-scroll'))
+            let Oli = $(".tc-watch-list-box .ticker-table-box.ticker-scroll .index_checked__6kpHD");
+            // console.log(Oli)
+            // let Oli = $(".market-table-container .watch-scroll-box .index_checked__gKVQB");
             this.coins = [];
             for(let i = 0; i < Oli.length; i++) {
                 let val = Oli[i]
-                let PDomLi = $(val).parents("tr")
-                let name = $.trim( PDomLi.find(".coin-info .coin-name>.short").text().split('/')[0] ); // 交易对 名称
+                let PDomLi = $(val).parents("a")
+                // let PDomLi = $(val)
+                let name = $.trim( PDomLi.find(".name-wrapper .top .name").text().split('/')[0] ); // 交易对 名称
                 this.coins.push({
                     id: '',
                     name: name,// 币名
@@ -1002,11 +1007,18 @@
         // 获取盘口标准值 实时币价
         this.getPKData = function(){
             
-            let Oli = $(".market-table-container .watch-scroll-box .index_checked__gKVQB");
+            // let Oli = $(".market-table-container .watch-scroll-box .index_checked__gKVQB");
+            // let Oli = $(".react-grid-layout-item-WatchList .ticker-table-box .item.checked");
+            let Oli = $(".tc-watch-list-box .ticker-table-box.ticker-scroll .index_checked__6kpHD");
+            console.log(Oli)
             for(let val of Oli){
-                let PDomLi = $(val).parents("tr")
-                let name = $.trim( PDomLi.find(".coin-info .coin-name>.short").text().split('/')[0] ); // 交易对 名称
-                let U = $.trim( PDomLi.find(".last-price .price-and-fiat span").eq(0).text().replace(',',"") );// 交易对 币价
+                let PDomLi = $(val).parents("a")
+                // let PDomLi = $(val)
+                // let name = $.trim( PDomLi.find(".coin-info .coin-name>.short").text().split('/')[0] ); // 交易对 名称
+                let name = $.trim( PDomLi.find(".name-wrapper .top .name").text().split('/')[0] ); // 交易对 名称
+                // let U = $.trim( PDomLi.find(".last-price .price-and-fiat span").eq(0).text().replace(',',"") );// 交易对 币价
+                console.log(PDomLi.find(".text-end").eq(0))
+                let U = $.trim( PDomLi.find(".text-end").eq(0).text().replace(',',"") );// 交易对 币价
                 for(let item of this.coins){
                     if(item.name==name){
                         item.pk = U*1;
