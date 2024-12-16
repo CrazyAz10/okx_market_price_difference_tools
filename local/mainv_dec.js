@@ -200,7 +200,7 @@
                             Otable.find('.sell>tbody>tr').eq(i).removeClass('biaoji').addClass(classname).html(Otd);
                         }else{
                             let bs = Math.round(val.tradeCount/this.coins_benchmark[item.name]*100);
-                            console.log('bs',bs)
+                            // console.log('bs',bs)
                             bs = bs>100?100:bs;
                             bs = bs<=0?1:bs;
                             // 基准背景色渲染
@@ -995,7 +995,7 @@
             // 异步获取数据
             for(let item of this.coins){
                 if (!item.active || !item.support) continue;
-                console.log('coins_item', item)
+                // console.log('coins_item', item)
                 // 添加买家
                 let data = Object.assign({},base_data);
                 data.coinId = item.coinId;
@@ -1108,7 +1108,7 @@
             if(!this.usdt.sell.length){
                 return;
             }
-            console.log("coins", this.coins)
+            // console.log("coins", this.coins)
             for(let item of this.coins){
                 if (!item.active || !item.support) continue;
                 item.bz_U_sell = this.usdt.sell[3].price;
