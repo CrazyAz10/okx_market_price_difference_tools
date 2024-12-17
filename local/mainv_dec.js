@@ -696,7 +696,7 @@
     function az_huobi_tools (){
         this.AZ_TOOLS_CONFIG = {
             pk_timer: 1000,// 币币市场刷新数据间隔时长
-            timer: 8000,// 法币交易刷新数据间隔时长
+            timer: 10000,// 法币交易刷新数据间隔时长
             Utimer: 10000,// USDT数据获取频率
             pointCardDiscount: 0.15,// 点卡折扣
         };
