@@ -7,15 +7,6 @@
     // 作用域配置
     AZ_TOOLS.adaptationArr = {
         // 域名拼接合成
-        // ['w'+'w'+'w'+'.'+'h'+'u'+'o'+'b'+'i'+'.']: [
-        //     {
-        //         path: /\/exchange\//,
-        //         name: 'az_huobi_tools',
-        //         // 黑名单 （名单不全待续补上）
-        //         blackDomain: [  
-        //         ]
-        //     }
-        // ],
         ['w'+'w'+'w'+'.'+'h'+'t'+'x'+'.']: [
             {
                 // path: /\/spot-list/,
@@ -199,7 +190,7 @@
                         if(classname){
                             Otable.find('.sell>tbody>tr').eq(i).removeClass('biaoji').addClass(classname).html(Otd);
                         }else{
-                            let bs = Math.round(val.tradeCount/this.coins_benchmark[item.name]*100);
+                            let bs = Math.round(val.tradeCount/item.benchmark*100);
                             // console.log('bs',bs)
                             bs = bs>100?100:bs;
                             bs = bs<=0?1:bs;
@@ -233,7 +224,7 @@
                         if(classname){
                             Otable.find('.buy>tbody>tr').eq(i).removeClass('biaoji').addClass(classname).html(Otd);
                         }else{
-                            let bs = Math.round(val.tradeCount/this.coins_benchmark[item.name]*100);
+                            let bs = Math.round(val.tradeCount/item.benchmark*100);
                             bs = bs>100?100:bs;
                             bs = bs<=0?1:bs;
                             // 基准背景色渲染
@@ -254,7 +245,7 @@
                 if (!item.active) continue;
                 Otable += `<div class="table" data-coin="${item.name}">
                                 <div class="table-title">
-                                    <span class="title">${item.name}市场挂单</span>
+                                    <span class="title">${item.name}市场挂单(单笔交易量:${item.single})</span>
                                     ${
                                         (() => {
                                             if (!item.support) {
@@ -443,7 +434,7 @@
                         if(classname){
                             Otable.find('.sell>tbody>tr').eq(i).removeClass('biaoji').addClass(classname).html(Otd);
                         }else{
-                            let bs = Math.round(val.tradeCount/this.coins_benchmark['USDT']*100);
+                            let bs = Math.round(val.tradeCount/this.coins.find(e => e.name === 'USDT').benchmark*100);
                             bs = bs>100?100:bs;
                             bs = bs<=0?1:bs;
                             Otable.find('.sell>tbody>tr').eq(i).removeClass('biaoji').css({
@@ -464,7 +455,7 @@
                         if(classname){
                             Otable.find('.buy>tbody>tr').eq(i).removeClass('biaoji').addClass(classname).html(Otd);
                         }else{
-                            let bs = Math.round(val.tradeCount/this.coins_benchmark['USDT']*100);
+                            let bs = Math.round(val.tradeCount/this.coins.find(e => e.name === 'USDT').benchmark*100);
                             bs = bs>100?100:bs;
                             bs = bs<=0?1:bs;
                             Otable.find('.buy>tbody>tr').eq(i).removeClass('biaoji').css({
@@ -713,32 +704,10 @@
             maker: 0.0014,
             taker: 0.0015
         }
-        // 币种基准数（用于计算币数量占比）
-        this.coins_benchmark = {
-            USDT: 10000,
-            BTC: 20,
-            USDD: 10000,
-            TRX: 40000,
-            ETH: 200,
-            EOS: 10000
-        }
         // 标记列表
         this.biaojiList = [];
         // 6中币数据  默认显示项
         this.coins = [
-            {
-                coinId: 2,
-                currency: 2,
-                name: "USDT",// 币名
-                buy: [],// 买家数据
-                sell: [],// 卖家数据
-                pk: "",// 盘口u
-                compare: "",// 比对值
-                bz_U: "",// 标准U
-                final_price: "",// 最终价
-                active: false, // 是否开启分析
-                support: true // 是否支持柜台交易
-            },
             {
                 coinId: 1,
                 currency: 2,
@@ -749,34 +718,27 @@
                 compare: "",// 比对值
                 bz_U: "",// 标准U
                 final_price: "",// 最终价
+                isTabs: true, // 是否显示再可选tab栏
                 active: true, // 是否开启分析
-                support: true // 是否支持柜台交易
+                support: true, // 是否支持柜台交易
+                single: 1, // 单笔交易量比价
+                benchmark: 10, // 量值100%时对应值（用于计算币数量占比）
             },
             {
-                coinId: 62,
+                coinId: 2,
                 currency: 2,
-                name: "USDD",// 币名
+                name: "USDT",// 币名
                 buy: [],// 买家数据
                 sell: [],// 卖家数据
                 pk: "",// 盘口u
                 compare: "",// 比对值
                 bz_U: "",// 标准U
                 final_price: "",// 最终价
+                isTabs: false, // 是否显示再可选tab栏
                 active: false, // 是否开启分析
-                support: true // 是否支持柜台交易
-            },
-            {
-                coinId: 22,
-                currency: 2,
-                name: "TRX",// 币名
-                buy: [],// 买家数据
-                sell: [],// 卖家数据
-                pk: "",// 盘口u
-                compare: "",// 比对值
-                bz_U: "",// 标准U
-                final_price: "",// 最终价
-                active: false, // 是否开启分析
-                support: true // 是否支持柜台交易
+                support: true, // 是否支持柜台交易
+                single: 1, // 单笔交易量比价
+                benchmark: 10000, // 量值100%时对应值（用于计算币数量占比）
             },
             {
                 coinId: 3,
@@ -788,8 +750,11 @@
                 compare: "",// 比对值
                 bz_U: "",// 标准U
                 final_price: "",// 最终价
+                isTabs: true, // 是否显示再可选tab栏
                 active: false, // 是否开启分析
-                support: true // 是否支持柜台交易
+                support: true, // 是否支持柜台交易
+                single: 1, // 单笔交易量比价
+                benchmark: 20, // 量值100%时对应值（用于计算币数量占比）
             },
             {
                 coinId: 5,
@@ -801,9 +766,60 @@
                 compare: "",// 比对值
                 bz_U: "",// 标准U
                 final_price: "",// 最终价
+                isTabs: false, // 是否显示再可选tab栏
                 active: false, // 是否开启分析
-                support: true // 是否支持柜台交易
-            }
+                support: true, // 是否支持柜台交易
+                single: 1, // 单笔交易量比价
+                benchmark: 1000000000, // 量值100%时对应值（用于计算币数量占比）
+            },
+            {
+                coinId: 22,
+                currency: 2,
+                name: "TRX",// 币名
+                buy: [],// 买家数据
+                sell: [],// 卖家数据
+                pk: "",// 盘口u
+                compare: "",// 比对值
+                bz_U: "",// 标准U
+                final_price: "",// 最终价
+                isTabs: true, // 是否显示再可选tab栏
+                active: false, // 是否开启分析
+                support: true, // 是否支持柜台交易
+                single: 1000, // 单笔交易量比价
+                benchmark: 10000, // 量值100%时对应值（用于计算币数量占比）
+            },
+            {
+                coinId: 62,
+                currency: 2,
+                name: "USDD",// 币名
+                buy: [],// 买家数据
+                sell: [],// 卖家数据
+                pk: "",// 盘口u
+                compare: "",// 比对值
+                bz_U: "",// 标准U
+                final_price: "",// 最终价
+                isTabs: false, // 是否显示再可选tab栏
+                active: false, // 是否开启分析
+                support: true, // 是否支持柜台交易
+                single: 1, // 单笔交易量比价
+                benchmark: 10000, // 量值100%时对应值（用于计算币数量占比）
+            },
+            {
+                coinId: 65,
+                currency: 2,
+                name: "HTX",// 币名
+                buy: [],// 买家数据
+                sell: [],// 卖家数据
+                pk: "",// 盘口u
+                compare: "",// 比对值
+                bz_U: "",// 标准U
+                final_price: "",// 最终价
+                isTabs: true, // 是否显示再可选tab栏
+                active: false, // 是否开启分析
+                support: true, // 是否支持柜台交易
+                single: 100000000, // 单笔交易量比价
+                benchmark: 1000000000, // 量值100%时对应值（用于计算币数量占比）
+            },
         ];
 
         // 展示节点模块
@@ -813,11 +829,8 @@
         this.getsellData = function(data,resolve,reject){
             var self = this;
             var otcApi = [
-                // "https://www.okex.com",
                 "https://www.htx.com.cm"
             ];
-            //https://www.okex.com/v3/c2c/tradingOrders/books?t=1641442780842&quoteCurrency=CNY&baseCurrency=USDT&tradeType=buy&paymentMethod=all&userType=all&showTrade=false&receivingAds=false&noShowSafetyLimit=false&showFollow=false&showAlreadyTraded=false&isAbleFilter=false&urlId=7
-            // Math.random()*10 > 5 ? DDtools_mainAPI = "https://otc-api-hk.eiijo.cn" : DDtools_mainAPI = "https://otc-api-sz.eiijo.cn"
             DDtools_mainAPI = otcApi[Math.floor(Math.random()*10) % otcApi.length]
             chrome.extension.sendMessage({
                 name: "universal", 
@@ -833,15 +846,9 @@
                     reject();
                 } else{
                     if (e && e.result && e.state) {
-                        // console.log(e)
                         let coinItem = self.coins.find(e => e.coinId === data.coinId)
                         e.result.tradeType = data.tradeType;
                         e.result.name = coinItem.name;
-                        // if(coinItem.name=="USDT"){
-                        //     e.result.data[data.tradeType] = e.result.data;
-                        // }else {
-                        //     e.result.data[data.tradeType] = e.result.data.slice(0,16);
-                        // }
                         resolve(e.result);
                     }else{
                         reject();
@@ -865,56 +872,16 @@
         //         }
         //     });
         // }
-        // 测试环境获取本地数据
-        // this.getUsdtData = function(data,resolve,reject){
-        //     chrome.extension.sendMessage({
-        //         name: "universal", 
-        //         url: "/local/usdt.json",
-        //         data: data,
-        //         type: "GET", 
-        //         dataType: "json"
-        //     }, function (e) {
-        //         if (e && e.result && e.state) {
-        //             resolve(e.result);
-        //         }else{
-        //             reject();
-        //         }
-        //     });
-        // }
         // 数据分析弹层 初始化弹窗
         this.dataAnalysisPop = function(){
             let self = this;
-            // 获取收藏交易对
-            // console.log($('.tc-watch-list-box .ticker-table-box.ticker-scroll'))
-            // let Oli = $(".tc-watch-list-box .ticker-table-box.ticker-scroll .index_checked__6kpHD");
-            // console.log(Oli)
-            // let Oli = $(".market-table-container .watch-scroll-box .index_checked__gKVQB");
-            // this.coins = [];
-            // for(let i = 0; i < Oli.length; i++) {
-            //     let val = Oli[i]
-            //     let PDomLi = $(val).parents("a")
-            //     // let PDomLi = $(val)
-            //     let name = $.trim( PDomLi.find(".name-wrapper .top .name").text().split('/')[0] ); // 交易对 名称
-            //     this.coins.push({
-            //         id: '',
-            //         name: name,// 币名
-            //         buy: [],// 买家数据
-            //         sell: [],// 卖家数据
-            //         pk: "",// 盘口u
-            //         compare: "",// 比对值
-            //         bz_U: "",// 标准U
-            //         final_price: "",// 最终价
-            //         active: i <= 1 ? true : false, // 是否开启分析
-            //         support: true // 是否支持柜台交易
-            //     },)
-            // }
             let Odom = `<div class="AZTOOLSFORMULA sjfx_pop">
                             <ul class="tab-list-select clearfix">
                                 ${
                                     (() => {
                                         let Oli = ``
                                         this.coins.forEach(item => {
-                                            Oli += `<li class="${item.active ? 'active' : ''}" data-tabid="${item.name}" data-coinid="${item.name}" >${item.name}</li>`
+                                            if (item.isTabs) Oli += `<li class="${item.active ? 'active' : ''}" data-tabid="${item.name}" data-coinid="${item.name}" >${item.name}</li>`
                                         })
                                         return Oli
                                     })()
@@ -977,7 +944,7 @@
         this.getBuySellData = function(){
             let base_data = {
                 coinId: 2,
-                currency: 2,
+                currency: 172,
                 tradeType: "sell",
                 currPage: 1,
                 currSize: 20,
@@ -1066,12 +1033,6 @@
                 this.usdt.sell = [];
                 for(let item of res){
                     this.usdt[item.tradeType] = this.usdt[item.tradeType].concat(item.data);
-                    // for(val of this.usdt[item.tradeType]){
-                        // val.userName= item.nickName;
-                        // val.tradeMonthTimes = val.completedOrderQuantity;
-                        // val.orderCompleteRate = val.completedRate;
-                        // val.tradeCount = val.tradeCount * 1;
-                    // }
                 }
                 if(fn) fn();
             },err=>{
@@ -1084,10 +1045,6 @@
 
         // 获取盘口标准值 实时币价
         this.getPKData = function(){
-            
-            // let Oli = $(".market-table-container .watch-scroll-box .index_checked__gKVQB");
-            // let Oli = $(".react-grid-layout-item-WatchList .ticker-table-box .item.checked");
-            // let Oli = $(".tpage-trade__left_coin .body>.content>.list .vue-recycle-scroller.scroller.ready.direction-vertical .vue-recycle-scroller__item-wrapper .vue-recycle-scroller__item-view");
             let Oli = $(".hb_icon_marked.active");
             for(let val of Oli){
                 let PDomLi = $(val).parents(".item-list")
@@ -1108,31 +1065,34 @@
             if(!this.usdt.sell.length){
                 return;
             }
-            // console.log("coins", this.coins)
             for(let item of this.coins){
                 if (!item.active || !item.support) continue;
-                item.bz_U_sell = this.usdt.sell[3].price;
-                item.bz_U_buy = this.usdt.buy[3].price;
-                item.final_price_buy = (item.bz_U_buy*item.pk * (1+this.rate.taker)).toFixed(2);
-                item.final_price_sell = (item.bz_U_sell*item.pk * (1+this.rate.maker)).toFixed(2);
+                item.bz_U_sell = this.usdt.sell[5].price; // 出售U单市场第5名
+                item.bz_U_buy = this.usdt.buy[5].price; // 收购U单市场第5名
+                // pk是当前币种在市场实时行情usdt交易对价格
+                // taker是现货交易商家费率（百分比换算成小数后的值）
+                // maker是现货交易个人费率（百分比换算成小数后的值）
+                item.final_price_buy = (item.bz_U_buy*item.pk * (1+this.rate.taker)).toFixed(2); // 买单加手续费后价格
+                item.final_price_sell = (item.bz_U_sell*item.pk * (1+this.rate.maker)).toFixed(2); // 卖单加手续费后价格
 
                 for(let val of item.buy){
-                    val.compare = (((item.final_price_buy*1000) - (val.price*1000))/1000).toFixed(2);// 
+                    // 展示在右边的列表
+                    // buy列表是挂单收购商家列表
+                    // 公式：( 实时行情价格(usdt) * 市场第5名收购商U价格(cny) * (1 + taker费率) ) - 所选代币出售商币价(cny) * 单笔交易量
+                    val.compare = ( ( ((item.final_price_buy * 1000) - (val.price * 1000)) * item.single) / 1000  ).toFixed(2);// 差价
                     val.U = (val.price/item.pk).toFixed(4);
-
-                    // val.userName = val.nickName; // 商家名称
-                    // val.tradeMonthTimes = val.completedOrderQuantity; // 完成订单数
-                    // val.orderCompleteRate = val.completedRate; // 完成交易占比
-                    // val.tradeCount = val.availableAmount; // 总订单收量
                 }
                 for(let val of item.sell){
-                    val.compare = (((val.price*1000) - (item.final_price_sell*1000))/1000).toFixed(2);// 
+                    // 展示在左边的列表
+                    // buy列表是挂单出售商家列表
+                    // 公式：所选代币收购商币价(cny)-( 实时行情价格(usdt) * 市场第5名出售商U价格(cny) * (1 + maker费率) ) * 单笔交易量
+                    val.compare = ( ( ((val.price * 1000) - (item.final_price_sell * 1000)) * item.single ) / 1000 ).toFixed(2);// 差价
                     val.U = (val.price/item.pk).toFixed(4);
 
-                    // val.userName = val.nickName;
-                    // val.tradeMonthTimes = val.completedOrderQuantity;
-                    // val.orderCompleteRate = val.completedRate;
-                    // val.tradeCount = val.availableAmount;
+                    // val.userName // 商家名称
+                    // val.tradeMonthTimes // 完成订单数
+                    // val.orderCompleteRate // 完成交易占比
+                    // val.tradeCount // 总订单收量
                 }
             }
             this.renderTableData();

@@ -613,7 +613,7 @@ li {
 .AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(4),
 #AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(4),
 .AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr th:nth-child(4) {
-  width: 80px;
+  width: 130px;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(5),
 .AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tr td:nth-child(5),
@@ -655,7 +655,7 @@ li {
 .AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(2),
 #AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(2),
 .AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(2) {
-  width: 80px;
+  width: 130px;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(1),
 .AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(1),
@@ -787,13 +787,13 @@ li {
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(3),
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(3),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(3) {
-  width: 60px;
+  min-width: 60px;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(1),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(1),
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(1),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(1) {
-  width: 60px;
+  min-width: 60px;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(2),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(2),
