@@ -311,6 +311,29 @@ body .AZTOOLSFORMULA_LAYER .layui-layer-btn .layui-layer-btn1{background: @color
         flex: none !important;
     }
 
+    .btn {
+        padding: 5px 10px;
+        border: 1px solid #999;
+        border-radius: 5px;
+        box-shadow: 2px 2px .5 rbga(0,0,0,.3);
+        opacity: .9;
+        &:hover{
+            opacity: 1;
+        }
+    }
+    .primary-btn{
+        background: @color-primary;
+        color: #fff;
+    }
+    .success-btn{
+        background: @color-green;
+        color: #fff;
+    }
+    .danger-btn{
+        background: @color-red;
+        color: #fff;
+    }
+
     // 分页样式
     .ui-paging-container{display: inline-block;color:#919191;font-size: 12px;line-height: 1em;}
     .ui-paging-container ul{overflow: hidden;text-align: center;}

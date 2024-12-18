@@ -592,7 +592,7 @@
                                     width: 130px;
                                 }
                                 td:nth-child(1),th:nth-child(1){
-                                    width: 70px;
+                                    min-width: 70px;
                                 }
                             }
                             tbody{
@@ -609,6 +609,7 @@
                         &.sell{
                             tbody{
                                 tr{
+                                    border-bottom: 1px solid transparent;
                                     &.color-green{
                                         background-size: 100% 100%!important;
                                         background: @color-green!important;
@@ -676,18 +677,21 @@
                     .chunk{
                         width: 100%;
                         >table{
+                            table-layout: fixed;
                             width: 50%;
                             &.sell{
                                 tr{
-                                    display: block;
                                     td:nth-child(1),th:nth-child(1){
                                         min-width: 160px;
+                                        width: calc(100% - 140px);
                                     }
                                     td:nth-child(2),th:nth-child(2){
-                                        width: 80px;
+                                        min-width: 80px;
+                                        min-width: 80px;
                                     }
                                     td:nth-child(3),th:nth-child(3){
                                         min-width: 60px;
+                                        width: 60px;
                                     }
                                 }
                             }
@@ -695,18 +699,50 @@
                                 tr{
                                     td:nth-child(1),th:nth-child(1){
                                         min-width: 60px;
+                                        width: 60px;
                                     }
                                     td:nth-child(2),th:nth-child(2){
                                         width: 80px;
+                                        min-width: 80px;
                                     }
                                     td:nth-child(3),th:nth-child(3){
                                         min-width: 160px;
+                                        width: calc(100% - 140px);
                                     }
                                 }
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+
+    // 设置弹窗内容样式
+    .setting-content{
+        .form-title{
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .form-group-item{
+            margin-bottom: 5px;
+            label{
+                display: inline-block;
+                min-width: 90px;
+                text-align: right;
+            }
+            input{
+                border: 1px solid #7D7D7D;
+                background: #fff;
+                border-radius: 5px;
+            }
+        }
+        .heandle-chunk{
+            margin-top: 10px;
+            button{
+                margin: 0 5px;
             }
         }
     }

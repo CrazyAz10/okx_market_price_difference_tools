@@ -661,7 +661,7 @@ li {
 .AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr td:nth-child(1),
 #AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(1),
 .AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tr th:nth-child(1) {
-  width: 70px;
+  min-width: 70px;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody,
 .AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody {
@@ -673,6 +673,12 @@ li {
   background-position: 0;
   background-repeat: no-repeat;
   background-image: linear-gradient(rgba(18, 184, 134, 0.1), rgba(18, 184, 134, 0.1));
+}
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr,
+#AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody tr,
+.AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.sell tbody tr {
+  border-bottom: 1px solid transparent;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr.color-green,
 .AZTOOLSFORMULA.sjfx_pop .table-list .table .chunk > table.buy tbody tr.color-green,
@@ -765,47 +771,80 @@ li {
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table,
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table {
+  table-layout: fixed;
   width: 50%;
-}
-#AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr,
-.AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr {
-  display: block;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(1),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(1),
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(1),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(1) {
   min-width: 160px;
+  width: calc(100% - 140px);
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(2),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(2),
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(2),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(2) {
-  width: 80px;
+  min-width: 80px;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(3),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr td:nth-child(3),
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(3),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.sell tr th:nth-child(3) {
   min-width: 60px;
+  width: 60px;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(1),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(1),
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(1),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(1) {
   min-width: 60px;
+  width: 60px;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(2),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(2),
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(2),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(2) {
   width: 80px;
+  min-width: 80px;
 }
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(3),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr td:nth-child(3),
 #AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(3),
 .AZTOOLSFORMULA.sjfx_pop .table-list.usdt .table .chunk > table.buy tr th:nth-child(3) {
   min-width: 160px;
+  width: calc(100% - 140px);
+}
+#AZTOOLSFORMULA .setting-content .form-title,
+.AZTOOLSFORMULA .setting-content .form-title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+#AZTOOLSFORMULA .setting-content .form-group-item,
+.AZTOOLSFORMULA .setting-content .form-group-item {
+  margin-bottom: 5px;
+}
+#AZTOOLSFORMULA .setting-content .form-group-item label,
+.AZTOOLSFORMULA .setting-content .form-group-item label {
+  display: inline-block;
+  min-width: 90px;
+  text-align: right;
+}
+#AZTOOLSFORMULA .setting-content .form-group-item input,
+.AZTOOLSFORMULA .setting-content .form-group-item input {
+  border: 1px solid #7D7D7D;
+  background: #fff;
+  border-radius: 5px;
+}
+#AZTOOLSFORMULA .setting-content .heandle-chunk,
+.AZTOOLSFORMULA .setting-content .heandle-chunk {
+  margin-top: 10px;
+}
+#AZTOOLSFORMULA .setting-content .heandle-chunk button,
+.AZTOOLSFORMULA .setting-content .heandle-chunk button {
+  margin: 0 5px;
 }
 .AZTOOLSFORMULA_LAYER .layui-layer-content {
   height: calc(100vh - 50px) !important;

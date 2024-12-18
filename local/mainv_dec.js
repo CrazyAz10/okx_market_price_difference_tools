@@ -3,6 +3,14 @@
             base_css: ""
         };
     var AZ_COMMON = {};// 啊佐插件公共方法
+    const AZ_TOOLS_BASE_CONFIG = {
+        pk_time: 1000,// 币币市场刷新数据间隔时长
+        c2c_time: 12000,// 法币交易刷新数据间隔时长
+        U_time: 10000,// USDT数据获取频率
+        // pointCardDiscount: 0.15,// 点卡折扣
+        maker: 0.0014,
+        taker: 0.0015
+    }
     // 自定义匹配域名
     // 作用域配置
     AZ_TOOLS.adaptationArr = {
@@ -366,8 +374,8 @@
                                             <thead>
                                                 <tr>
                                                     <th class="left">商(30日成单 | 30日完成率)</th>
-                                                    <th>量</th>
-                                                    <th>卖U</th>
+                                                    <th class="right">量</th>
+                                                    <th class="right">卖U</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -395,7 +403,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="left">买U</th>
-                                                    <th>量</th>
+                                                    <th class="left">量</th>
                                                     <th class="right">商(30日成单 | 30日完成率)</th>
                                                 </tr>
                                             </thead>
@@ -406,8 +414,8 @@
                                                     for(let val of self.usdt.buy){
                                                         Otr += `<tr>
                                                                     <td class="left">${val.price}</td>
-                                                                    <td>${val.tradeCount}</td>
-                                                                    <td class="name" data-name="${val.userName}">${val.userName} (${val.tradeMonthTimes} | ${val.orderCompleteRate}%)</td>
+                                                                    <td class="left">${val.tradeCount}</td>
+                                                                    <td class="right" class="name" data-name="${val.userName}">${val.userName} (${val.tradeMonthTimes} | ${val.orderCompleteRate}%)</td>
                                                                 </tr>`;
                                                     }
                                                     return Otr;
@@ -423,8 +431,8 @@
                     for(let i in self.usdt.sell){
                         let val = self.usdt.sell[i];
                         let Otd =  `<td class="left">${val.userName} (${val.tradeMonthTimes} | ${val.orderCompleteRate}%)</td>
-                                    <td>${val.tradeCount}</td>
-                                    <td>${val.price}</td>`;
+                                    <td class="right">${val.tradeCount}</td>
+                                    <td class="right">${val.price}</td>`;
                         Otable.find('.sell>tbody>tr').eq(i).html(Otd);
                         // 打标颜色
                         let classname = "";
@@ -445,8 +453,8 @@
                     for(let i in self.usdt.buy){
                         let val = self.usdt.buy[i];
                         let Otd =  `<td class="left">${val.price}</td>
-                                    <td>${val.tradeCount}</td>
-                                    <td>${val.userName} (${val.tradeMonthTimes} | ${val.orderCompleteRate}%)</td>`;
+                                    <td class="left">${val.tradeCount}</td>
+                                    <td class="right">${val.userName} (${val.tradeMonthTimes} | ${val.orderCompleteRate}%)</td>`;
                         // 打标颜色
                         let classname = "";
                         if(this.biaojiList.indexOf(val.userName) > -1){
@@ -531,6 +539,7 @@
 
         // 初始化
         this.init = function () {
+            // console.log(1111)
             // let iframe = `<iframe id="az_eth_usdt" src="https://www.huobi.co/zh-cn/exchange/eth_usdt/"></iframe>`;
             // $('body').append(iframe);
             // // 清除节点
@@ -540,6 +549,9 @@
             chrome.storage.local.get('AZ_TOOLS_CONFIG', (e) => {
                 if (!$.isEmptyObject(e)) {
                     this.AZ_TOOLS_CONFIG = JSON.parse(e.AZ_TOOLS_CONFIG);
+                    for(let i in this.AZ_TOOLS_CONFIG) {
+                        if(!isNaN(this.AZ_TOOLS_CONFIG[i]*1)) this.AZ_TOOLS_CONFIG[i] *= 1;
+                    }
                 }
             });
             // 渲染工具箱
@@ -572,7 +584,7 @@
                                             <span>数据分析</span>
                                         </p>
                                     </li>
-                                    <li class="information" my title="工具配置">
+                                    <li class="setting" my title="工具配置">
                                         <p>
                                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAEgUlEQVRoQ+2ZaahVVRTHf/9GopE+BE1Uamll0CBERWWgzV+M5qJoMBosCG3+UEGRVkZgA0JFEVFZ9CEQi5JEP1sUJaiVJTQTVjbS8I91WedyuO/ee+71nWv3xdtfHmffc/b+//Zaa++11xNjvGmM62cc4L+24LgF/rcWsD0NuA84GdgW+AB4SNLLdUIPxIVsnwq8DuzYItbAFEnr6oKoHcD2OUCs8nYdRN4o6bFuALbPA1ZL+rQKtFYA27OBxdDcnr8EZgLnA3enmHsl3dNJmO2rgKeAzcC0KmvVBmD7rvT5QtsGYLqkjbZDcK8AzwOX5iCfAEdK+rkTcC0AthcBc0qTrAFOkfRt9PUJMBV4r+SCy4CzJEX8jGijArC9DfAMcHlp5NXADEk/FH1VALYnlP3d9gnAO8D2OcZsSeFW9QHYjsFfA84ujboKOEPSL+WZugHYvhl4BHhJ0kUl6HCjcKdo3wEHSvq1lWCLLGB7J2BpuElpwDD1LEl/tE5SAfANsFd+M1dSwDSa7ZjjzHxcIOn2SgDb+wGvAsd2Cpw2/a8AF0v6q903FQCxa12T3/2T7hfuEwCTgYincNU/gYMlfV6eY4QFbM+LE7MP8REDV3cKshTSdRey/UIsQM75NRAx8Vt+G+Nfkb8tlBT6mq0dQHmyKo5HJYUPd209BHHE0/vAoTnQLZIeToCj41DL/g2SJvQDMOLQsd3cziT1FENVACk0Tt8lKe4rSfsUQm1/ARTPkYqsLX6rssDWBAgtIXTvFBencGPlbT8JXNtqnXgeGoAUGjnSDSn0AUl3Zv+VwNPZv0TSBUNngRQ6PQ+weFwuaUb2R3b7ZopeKSlS9EYbNgvsAWxKbWskHZ4AhwEfZf86SbG9DiXADkBxEG6StGcC7Ab8mJp/krT7sALsDBSZ52ZJITyCeJdMr+Ox2T+MLjQR+DhXd72kQxJgErA++9dKmjKsFpiVCWLoWyXppAQ4EViZoldIauZgwxbETwDXpdBFkm5KgLjRFcWAFyUVacfQ7ULhPuFG0WZKejsB5gO3ZX8zzRiqGLB9GvBGioxEbldJfyfARmD//O0gSZ/1GgPPAc8WL+ffRqqbrW2O3vJ+5ZXSdpRfYvUjlY8W9aNbU/xRwLvtAriTBeLDBa0iujzXkU5HEhfJXLS4fU2UFFWJgI9FvKwVrJsFjgDidrVvHxCjudBE2jw354oLzemS3krx5RM43GlS2X3aWqAX0QO8Us6TtLDQYHtFliaja7GkIiNtyuwpn28HVeOlvrgBtl7qrwcez7l/Bw4oyjRlPVsMkCauq6wSPh9FrEazHdnm8iwKR9d8SXe0W8hRAZQmrLOwFRlo7DqR2EWLItfxksIKI1otALlqgygtxgV/qqTvO8VmbQAJ0a64G5eUS/qojRbF3chKj5P0YbeNpVaAhLgwK2qdyutzJBXB2Vab7XPDjbZ6eb0UE93+wTFZUpEa97Jrd32ndguUII4B7m/5F9ODkorSyajFxwADA6hFXQ+DjAP0sEgDfWXcAgNd3h4GH/MW+BfpvK1PmB20swAAAABJRU5ErkJggg==" />
                                             <span>工具配置</span>
@@ -625,6 +637,11 @@
             // 数据分析
             $('body').on('click','#AZTOOLSFORMULA .menu .data-analysis',()=>{
                 this.dataAnalysisPop();
+            });
+
+            // 工具配置
+            $('body').on('click','#AZTOOLSFORMULA .menu .setting',()=>{
+                this.settingPop();
             });
         }
 
@@ -680,19 +697,105 @@
                         </div>`;
             $('#AZTOOLSFORMULA .normal').append(Odom);
         }
+
+        this.settingPop = function() {
+            $('#AZTOOLSFORMULA .az-pop').remove();
+            let Odom = `<div class="az-pop tools-pop tools">
+                            <div class="head">
+                                配置参数
+                                <i class="close">×</i>
+                            </div>
+                            <div class="content-pop setting-content">
+                                <div>
+                                    <div>
+                                        <div class="form-title">频率设置</div>
+                                        <div class="form-group-item">
+                                            <label>行情刷新时间</label>
+                                            <input id="pkTime" type="number"></input>毫秒
+                                        </div>
+                                        <div class="form-group-item">
+                                            <label>c2c刷新时间</label>
+                                            <input id="c2cTime" type="number"></input>毫秒
+                                        </div>
+                                        <div class="form-group-item">
+                                            <label>usdt刷新时间</label>
+                                            <input id="uTime" type="number"></input>毫秒
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-title">费率设置</div>
+                                        <div class="form-group-item">
+                                            <label>maker费率</label>
+                                            <input id="makerRate" type="number"></input>
+                                        </div>
+                                        <div class="form-group-item">
+                                            <label>taker费率</label>
+                                            <input id="takerRate" type="number"></input>
+                                        </div>
+                                    </div>
+                                    <div class="heandle-chunk flex align-middle justify-center content-center">
+                                        <button id="saveSetting" class="btn success-btn">保存</button>
+                                        <button id="resetSetting" class="btn danger-btn">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+            $('#AZTOOLSFORMULA .normal').append(Odom);
+            // 表单赋初始值
+            $("#pkTime").val(this.AZ_TOOLS_CONFIG.pk_time)
+            $("#c2cTime").val(this.AZ_TOOLS_CONFIG.c2c_time)
+            $("#uTime").val(this.AZ_TOOLS_CONFIG.U_time)
+            $("#makerRate").val(this.AZ_TOOLS_CONFIG.maker)
+            $("#takerRate").val(this.AZ_TOOLS_CONFIG.taker)
+
+            // 保存配置
+            $('body').on('click','#AZTOOLSFORMULA .az-pop #saveSetting',()=>{
+                var configForm = {
+                    pk_time: Number($("#pkTime").val()),// 币币市场刷新数据间隔时长
+                    c2c_time: Number($("#c2cTime").val()),// 法币交易刷新数据间隔时长
+                    U_time: Number($("#uTime").val()),// USDT数据获取频率
+                    maker: Number($("#makerRate").val()),
+                    taker: Number($("#takerRate").val())
+                }
+                chrome.storage.local.set({
+                    AZ_TOOLS_CONFIG: JSON.stringify(configForm)
+                }, (e) => {
+                    this.AZ_TOOLS_CONFIG = JSON.parse(JSON.stringify(configForm))
+                    layer.msg(
+                        "保存成功！",
+                        {icon: 1, offset: '50px', time: 5000}// icon=0:info, 1:success, 2:error  
+                    );
+                });
+            });
+
+            // 重置配置
+            $('body').on('click','#AZTOOLSFORMULA .az-pop #resetSetting',()=>{
+                chrome.storage.local.set({
+                    AZ_TOOLS_CONFIG: JSON.stringify(AZ_TOOLS_BASE_CONFIG)
+                }, (e) => {
+                    this.AZ_TOOLS_CONFIG = JSON.parse(JSON.stringify(AZ_TOOLS_BASE_CONFIG))
+                    // 表单赋初始值
+                    $("#pkTime").val(this.AZ_TOOLS_CONFIG.pk_time)
+                    $("#c2cTime").val(this.AZ_TOOLS_CONFIG.c2c_time)
+                    $("#uTime").val(this.AZ_TOOLS_CONFIG.U_time)
+                    $("#makerRate").val(this.AZ_TOOLS_CONFIG.maker)
+                    $("#takerRate").val(this.AZ_TOOLS_CONFIG.taker)
+                    layer.msg(
+                        "重置成功！",
+                        {icon: 1, offset: '50px', time: 5000}// icon=0:info, 1:success, 2:error  
+                    );
+                });
+            });
+        }
     }
 
 
     // ****************火币平台
     function az_huobi_tools (){
-        this.AZ_TOOLS_CONFIG = {
-            pk_timer: 1000,// 币币市场刷新数据间隔时长
-            timer: 8000,// 法币交易刷新数据间隔时长
-            Utimer: 10000,// USDT数据获取频率
-            pointCardDiscount: 0.15,// 点卡折扣
-        };
+        this.AZ_TOOLS_CONFIG = JSON.parse(JSON.stringify(AZ_TOOLS_BASE_CONFIG));
         az_ToolsFormula.call(this);
-        this.ana_timer = {};// 买卖家定时器
+        this.pk_timer = {};// 现货市场获取数据定时器
+        this.c2c_timer = {};// 买卖家定时器
         this.U_timer = {};// usdt获取数据定时器
         // usdt单独买卖家数据
         this.usdt = {
@@ -700,10 +803,6 @@
             buy: [],
             sell: [],
         };
-        this.rate = {
-            maker: 0.0014,
-            taker: 0.0015
-        }
         // 标记列表
         this.biaojiList = [];
         // 6中币数据  默认显示项
@@ -723,6 +822,8 @@
                 support: true, // 是否支持柜台交易
                 single: 1, // 单笔交易量比价
                 benchmark: 10, // 量值100%时对应值（用于计算币数量占比）
+                frequency: 10000, // 数据获取刷新频率
+                timer: null, // 定时器
             },
             {
                 coinId: 2,
@@ -739,6 +840,8 @@
                 support: true, // 是否支持柜台交易
                 single: 1, // 单笔交易量比价
                 benchmark: 10000, // 量值100%时对应值（用于计算币数量占比）
+                frequency: 10000, // 数据获取刷新频率
+                timer: null, // 定时器
             },
             {
                 coinId: 3,
@@ -755,6 +858,8 @@
                 support: true, // 是否支持柜台交易
                 single: 1, // 单笔交易量比价
                 benchmark: 20, // 量值100%时对应值（用于计算币数量占比）
+                frequency: 10000, // 数据获取刷新频率
+                timer: null, // 定时器
             },
             {
                 coinId: 5,
@@ -771,6 +876,8 @@
                 support: true, // 是否支持柜台交易
                 single: 1, // 单笔交易量比价
                 benchmark: 1000000000, // 量值100%时对应值（用于计算币数量占比）
+                frequency: 10000, // 数据获取刷新频率
+                timer: null, // 定时器
             },
             {
                 coinId: 22,
@@ -787,6 +894,8 @@
                 support: true, // 是否支持柜台交易
                 single: 1000, // 单笔交易量比价
                 benchmark: 10000, // 量值100%时对应值（用于计算币数量占比）
+                frequency: 10000, // 数据获取刷新频率
+                timer: null, // 定时器
             },
             {
                 coinId: 62,
@@ -803,6 +912,8 @@
                 support: true, // 是否支持柜台交易
                 single: 1, // 单笔交易量比价
                 benchmark: 10000, // 量值100%时对应值（用于计算币数量占比）
+                frequency: 10000, // 数据获取刷新频率
+                timer: null, // 定时器
             },
             {
                 coinId: 65,
@@ -819,6 +930,8 @@
                 support: true, // 是否支持柜台交易
                 single: 100000000, // 单笔交易量比价
                 benchmark: 1000000000, // 量值100%时对应值（用于计算币数量占比）
+                frequency: 10000, // 数据获取刷新频率
+                timer: null, // 定时器
             },
         ];
 
@@ -842,7 +955,7 @@
                 // 交易对不支持OTC交易
                 if (e.result.error_code === "17007") {
                     self.coins[self.coins.findIndex( item => item.name == data.baseCurrency)].support = false
-                    $(`.AZTOOLSFORMULA_LAYER .table-list.other .table[data-coin="${data.baseCurrency}"] .table-title`).append('<span style="color: red">该币种不支持OTC交易 </span>')
+                    $(`.AZTOOLSFORMULA_LAYER .table-list.other .table[data-coin="${data.baseCurrency}"] .table-title`).append('<span style="color: #fff">该币种不支持OTC交易 </span>')
                     reject();
                 } else{
                     if (e && e.result && e.state) {
@@ -903,14 +1016,14 @@
                 area: ["100%","100%"],
                 content: Odom, //注意，如果str是object，那么需要字符拼接。
                 end: function(){
-                    clearInterval(self.ana_timer);
-                    clearInterval(self.U_timer);
                     clearInterval(self.pk_timer);
+                    clearInterval(self.c2c_timer);
+                    clearInterval(self.U_timer);
                 },
                 cancel: function(){
-                    clearInterval(self.ana_timer);
-                    clearInterval(self.U_timer);
                     clearInterval(self.pk_timer);
+                    clearInterval(self.c2c_timer);
+                    clearInterval(self.U_timer);
                 }
             });
             this.coins.length && this.distribution();
@@ -919,24 +1032,23 @@
         // 分配任务器
         this.distribution = function(){
             let self = this;
-            clearInterval(this.ana_timer);
-            clearInterval(this.U_timer);
             clearInterval(this.pk_timer);
-
+            clearInterval(this.c2c_timer);
+            clearInterval(this.U_timer);
             this.pk_timer = setInterval(()=>{
                 self.getPKData();
-            },this.AZ_TOOLS_CONFIG.pk_timer);
+            },this.AZ_TOOLS_CONFIG.pk_time);
             // 分配USDT数据请求
             this.getUSDTData(function(){
                 // 分配买卖家数据请求
                 self.getBuySellData();
-                self.ana_timer = setInterval(()=>{
+                self.c2c_timer = setInterval(()=>{
                     self.getBuySellData();
-                },self.AZ_TOOLS_CONFIG.timer);
+                },self.AZ_TOOLS_CONFIG.c2c_time);
 
                 self.U_timer = setInterval(()=>{
                     self.getUSDTData();
-                },self.AZ_TOOLS_CONFIG.Utimer);
+                },self.AZ_TOOLS_CONFIG.U_time);
             });
         }
 
@@ -1072,8 +1184,8 @@
                 // pk是当前币种在市场实时行情usdt交易对价格
                 // taker是现货交易商家费率（百分比换算成小数后的值）
                 // maker是现货交易个人费率（百分比换算成小数后的值）
-                item.final_price_buy = (item.bz_U_buy*item.pk * (1+this.rate.taker)).toFixed(2); // 买单加手续费后价格
-                item.final_price_sell = (item.bz_U_sell*item.pk * (1+this.rate.maker)).toFixed(2); // 卖单加手续费后价格
+                item.final_price_buy = (item.bz_U_buy*item.pk * (1+this.AZ_TOOLS_CONFIG.taker)).toFixed(2); // 买单加手续费后价格
+                item.final_price_sell = (item.bz_U_sell*item.pk * (1+this.AZ_TOOLS_CONFIG.maker)).toFixed(2); // 卖单加手续费后价格
 
                 for(let val of item.buy){
                     // 展示在右边的列表

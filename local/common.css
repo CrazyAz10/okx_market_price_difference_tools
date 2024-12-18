@@ -426,6 +426,33 @@ body .AZTOOLSFORMULA_LAYER .layui-layer-btn .layui-layer-btn1 {
   -ms-flex: none !important;
   flex: none !important;
 }
+#AZTOOLSFORMULA .btn,
+.AZTOOLSFORMULA .btn {
+  padding: 5px 10px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0.5 rbga(0, 0, 0, 0.3);
+  opacity: 0.9;
+}
+#AZTOOLSFORMULA .btn:hover,
+.AZTOOLSFORMULA .btn:hover {
+  opacity: 1;
+}
+#AZTOOLSFORMULA .primary-btn,
+.AZTOOLSFORMULA .primary-btn {
+  background: #409EFF;
+  color: #fff;
+}
+#AZTOOLSFORMULA .success-btn,
+.AZTOOLSFORMULA .success-btn {
+  background: #41b37d;
+  color: #fff;
+}
+#AZTOOLSFORMULA .danger-btn,
+.AZTOOLSFORMULA .danger-btn {
+  background: #d74e5a;
+  color: #fff;
+}
 #AZTOOLSFORMULA .ui-paging-container,
 .AZTOOLSFORMULA .ui-paging-container {
   display: inline-block;
